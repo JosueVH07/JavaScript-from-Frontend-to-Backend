@@ -1,16 +1,16 @@
 const Counter = {
   data() {
     return {
-      count : 0
+      count: 0
     }
   },
-  template : `
+  template: `
     <button @click="count++">Increment counter by count++</button> 
-       &nbsp;&nbsp; count = {{count}} <br><br>
+      &nbsp;&nbsp; count = {{count}} <br><br>
     <button @click="incr()">Increment counter by incr()</button> 
       &nbsp;&nbsp; count = {{count}}
   `,
-  methods : {
+  methods: {
     incr() {
       this.count++;
     }
