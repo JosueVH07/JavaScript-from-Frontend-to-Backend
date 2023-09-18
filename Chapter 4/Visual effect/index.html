@@ -32,11 +32,17 @@
       },
       template : `
         <button @click="show=!show">Produce the effect</button>
-        <transition>
+        <transition-group>
           <p v-if="show">
             Paragraph 1
           </p>
-        </transition>   
+          <p v-if="show">
+            Paragraph 1
+          </p>
+          <p v-if="show">
+            Paragraph 1
+          </p>
+        </transition-group>   
       `,
     });
     
