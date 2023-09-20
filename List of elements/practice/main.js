@@ -5,9 +5,9 @@ const Main = {
         return {
             elements: []
         }
-    }, 
+    },
     components: {
-        Element:Element
+        Element: Element
     },
     template: `
         <div>
@@ -17,6 +17,7 @@ const Main = {
                 :key='i' :text='element' 
                 :index='i'
                 @remove='remove($event)'
+                @modify='modify($event)'
                 />
             </ul>
         </div>
@@ -29,8 +30,13 @@ const Main = {
         remove(params) {
             var index = params.index;
             this.elements.splice(index, 1);
-          },
+        },
+        modify(params) {
+            var index = params.i;
+            var value = params.value;
+            this.elements[index] = value;
+        }
     }
-    }
+}
 
 export default Main;
