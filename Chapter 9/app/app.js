@@ -6,12 +6,13 @@ var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+// var listRouter = require('./routes/list');
 
 var mongoose = require("mongoose");
 mongoose.connect("mongodb://localhost/mydb_test");
 
 var listSchema = mongoose.Schema({
- text : String
+  text: String
 });
 
 var List = mongoose.model("elements", listSchema);
@@ -30,21 +31,21 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+// app.use('/list', listRouter);
 
 // creating a new element in the list
-app.post("/list", function(req, res) {
+app.post("/list", function (req, res) {
   var text = req.body.text;
   console.log(text);
-  List.create({text:text}, function(err, doc) {
-    res.json({id:doc._id});
-  });
+  List.create({ text: text }).then((doc) => res.json({ id: doc._id })).catch((err) => console.log('err: ', err))
 });
 
+
+
 // retrieving list of elements
-app.get("/list", function(req, res) {
-  List.find(function(err, elements) {
-    res.json({elements:elements});
-  });
+app.get("/list", function (req, res) {
+  console.log(res)
+  List.find().then((elements) => res.json({ elements: elements })).catch((err) => console.log('err: ', err))
 });
 
 // modifying an element in the list
@@ -64,12 +65,12 @@ app.delete("/list", function(req, res) {
 });
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   next(createError(404));
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
